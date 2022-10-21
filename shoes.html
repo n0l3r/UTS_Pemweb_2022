@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Shoes</title>
+
+    <style>
+        body {
+            margin: auto;
+            width: 80%;
+            padding: 10px;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #415b72;
+            border-radius: 50px;
+            position: fixed;
+            top: 20;
+            width: 80%;
+
+        }
+
+        .nav-menu {
+            float: left;
+            font-size: 22px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        .nav-menu:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .form-search {
+            float: right;
+
+        }
+
+        .input-search {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            border: #000 1px solid;
+        }
+
+        .search-btn {
+            float: right;
+            padding: 6px 10px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 25px 25px 0;
+            border: #000 1px solid;
+        }
+
+        .search-btn:hover {
+            background: #ccc;
+        }
+
+        .search-btn:active {
+            background: #ccc;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            color: #415b72;
+            font-family: monospace;
+            font-size: 16px;
+            text-align: center;
+
+        }
+
+        th {
+            background-color: #415b72;
+            color: white;
+            height: 50px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        table,
+        th,
+        td {
+            border: 2px solid #415b72;
+        }
+
+        .btn {
+            background-color: #415b72;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 25px;
+        }
+
+        .btn:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .card {
+            margin-top: 100px;
+            margin-bottom: 200px;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 25px;
+        }
+
+        .card-footer {
+            padding-top: 20px;
+        }
+
+        .filter {
+            float: left;
+            width: 20%;
+            margin-left: 20px;
+        }
+
+        .filter select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .pagination {
+            display: inline-block;
+            margin-left: 40%;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border-radius: 25px;
+        }
+
+        .pagination a.active {
+            background-color: #415b72;
+            color: white;
+            border-radius: 25px;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+            border-radius: 25px;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #415b72;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a class="nav-menu" href="index.html">Home</a>
+        <a class="nav-menu" href="products.html">Products</a>
+        <a class="nav-menu" href="shoes.html">Shoes</a>
+        <a class="nav-menu" href="contact.html">Contact</a>
+
+        <form class="form-search" onsubmit="searchProducts();">
+            <input class="input-search" type="text" placeholder="Search.." name="search">
+            <button class="search-btn" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="filter">
+                <label for="filter">Filter by:</label>
+                <select name="filter" id="filter" onchange="filterProducts();">
+                    <option value="All">All</option>
+                    <option value="Adidas">Adidas</option>
+                    <option value="Converse">Converse</option>
+                    <option value="Nike">Nike</option>
+                </select>
+            </div>
+
+            <form class="form-search">
+                <input class="input-search" type="text" placeholder="Search.." name="search">
+                <button class="search-btn" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="card-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody id="products">
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="pagination">
+                <a href="#">&laquo;</a>
+                <a href="#">1</a>
+                <a class="active" href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">&raquo;</a>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <p>© 2022 - n0l3r Shoes Store</p>
+    </footer>
+
+</body>
+
+<script type="text/javascript">
+    var products = [
+        {
+            id: 1,
+            name: "Adidas Centenial 85 Shoes",
+            price: 200000,
+            stock: 10,
+            color: "Black",
+            size: 40,
+            image: "https://www.adidas.co.id/media/catalog/product/cache/3bec5fdb79d91223b1a151be2b21ce8d/g/w/gw9361_sl_ecom.jpg"
+        },
+        {
+            id: 2,
+            name: "Nike Jordan 2 x CLOT",
+            price: 230000,
+            stock: 15,
+            color: "Red",
+            size: 40,
+            image: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/45e8827b-4c0e-41b3-afe8-3cb4569632db/jordan-delta-2-clot-shoes.png"
+        },
+        {
+            id: 3,
+            name: "Puma Flyer Runner Sneakers",
+            price: 150000,
+            stock: 20,
+            color: "Red",
+            size: 38,
+            image: "https://dynamic.zacdn.com/jzpoS6_FC5B1JBQWjgy-1LvbFcY=/fit-in/236x345/filters:quality(90):fill(ffffff)/https://static-id.zacdn.com/p/puma-2198-1027932-2.jpg"
+        },
+        {
+            id: 4,
+            name: "Converse Taylor All Star",
+            price: 120000,
+            stock: 21,
+            color: "Blue",
+            size: 39,
+            image: "https://www.converse.id/media/catalog/product/cache/144a401d4eb9f312744987a3cea154c3/C/O/CON564981C-1_1.jpg"
+        },
+        {
+            id: 5,
+            name: "Vans UA Classic Slip On",
+            price: 300000,
+            stock: 30,
+            color: "Black",
+            size: 44,
+            image: "https://dynamic.zacdn.com/tvLQ0q1gm_wRCq7Zlq8pRkmzRcw=/fit-in/236x345/filters:quality(90):fill(ffffff)/https://static-id.zacdn.com/p/vans-1617-0552622-2.jpg"
+        },
+        {
+            id: 6,
+            name: "Adidas Retropy F2",
+            price: 210000,
+            stock: 3,
+            color: "Black",
+            size: 42,
+            image: "https://www.adidas.co.id/media/catalog/product/cache/3bec5fdb79d91223b1a151be2b21ce8d/g/w/gw9361_sl_ecom.jpg"
+        },
+        {
+            id: 7,
+            name: "Nike Jordan Retro High OG",
+            price: 250000,
+            stock: 15,
+            color: "White",
+            size: 42,
+            image: "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/e24cc9da-a136-4262-987d-ab1a435cade1/air-jordan-1-retro-high-og-shoes-1QP6Gw.png"
+        },
+        {
+            id: 8,
+            name: "Puma Varsity Shoes",
+            price: 150000,
+            stock: 20,
+            color: "Red",
+            size: 38,
+            image: "https://dynamic.zacdn.com/M4i6Res0mXpGZuqiZrEQjjqFI2Q=/fit-in/236x345/filters:quality(90):fill(ffffff)/https://static-id.zacdn.com/p/puma-0511-0980752-2.jpg"
+        },
+        {
+            id: 9,
+            name: "Converse Chuck 70 HI unisex",
+            price: 100000,
+            stock: 25,
+            color: "Blue",
+            size: 36,
+            image: "https://www.converse.id/media/catalog/product/cache/144a401d4eb9f312744987a3cea154c3/C/O/CON162050C-1_1.jpg"
+        },
+        {
+            id: 10,
+            name: "Vans Old Skool",
+            price: 300000,
+            stock: 30,
+            color: "Yellow",
+            size: 44,
+            image: "https://dynamic.zacdn.com/_-XM9hfQahmsfu49997CmXiyE-g=/fit-in/236x345/filters:quality(90):fill(ffffff)/https://static-id.zacdn.com/p/vans-8631-7725061-2.jpg"
+        },
+        {
+            id: 11,
+            name: "Adidas Samba",
+            price: 230000,
+            stock: 5,
+            color: "Black",
+            size: 43,
+            image: "https://www.adidas.co.id/media/catalog/product/cache/3bec5fdb79d91223b1a151be2b21ce8d/h/q/hq7034_sl_ecom.jpg"
+        },
+    ];
+
+
+    window.onload = function () {
+        displayProducts(products);
+    }
+
+    function displayProducts(products) {
+        var productsData = "";
+        for (var i = 0; i < products.length; i++) {
+            productsData += "<tr>";
+            productsData += "<td>" + products[i].name + "</td>";
+            productsData += "<td>" + products[i].price + "</td>";
+            productsData += "<td>" + products[i].stock + "</td>";
+            productsData += "<td>" + products[i].color + "</td>";
+            productsData += "<td>" + products[i].size + "</td>";
+            productsData += "<td><a class='btn' href='detail.html?id=" + products[i].id + "&=name=" + products[i].name + "&=price=" + products[i].price + "&=stock=" + products[i].stock + "&=color=" + products[i].color + "&=size=" + products[i].size + "'>Detail</a></td>";
+            productsData += "</tr>";
+        }
+        document.getElementById("products").innerHTML = productsData;
+    }
+
+    function filterProducts() {
+        var filter = document.getElementById("filter").value;
+        if (filter == "All") return displayProducts(products);
+        var filteredProducts = products.filter(function (product) {
+            return product.name.toLowerCase().includes(filter.toLowerCase());
+        });
+        displayProducts(filteredProducts);
+    }
+
+    function searchProducts() {
+        // bingung pak
+    }
+</script>
+
+</html>
